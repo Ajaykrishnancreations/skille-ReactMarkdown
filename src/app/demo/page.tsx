@@ -100,31 +100,37 @@ const MarkdownPreviewer: React.FC = () => {
         </h3>
       );
     },
+    strong: ({ children }: { children: React.ReactNode }) => (
+      <div className={`mt-5 ${isDarkTheme ? 'text-white' : ''}`}><strong>{children}</strong></div>
+    ),
+    p: ({ children }: { children: React.ReactNode }) => (
+      <div className={`mt-5 ${isDarkTheme ? 'text-white' : ''}`}><p>{children}</p></div>
+    ),
   };
   const toggleTheme = () => {
     setIsDarkTheme((prevTheme) => !prevTheme);
   };
   return (
     <div className='p-10'>
+      <button
+        onClick={toggleTheme}
+        className={`bg-${isDarkTheme ? 'gray-300 text-black bg-gray-200' : 'gray-700 text-white bg-gray-800'} p-2 rounded `}
+      >
+        Toggle Theme
+      </button>
       <div className='flex flex-row'>
         <div className='basis-10/12' style={{ height: '90vh', overflow: 'scroll' }} ref={contentRef}>
           <div className={`p-10 ${isDarkTheme ? 'bg-gray-900' : 'bg-gray-100'} rounded border-1 border-gray-200`}>
-            <button
-              onClick={toggleTheme}
-              className={`bg-${isDarkTheme ? 'gray-300 text-black bg-gray-200' : 'gray-700 text-white bg-gray-800'} p-2 rounded `}
-            >
-              Toggle Theme
-            </button>
             <ReactMarkdown components={components} children={demoContent} />
           </div>
         </div>
-        <div className='basis-2/12'>
+        <div className='basis-2/12 p-10'>
           {titles.map((title, index) => (
             <Title
               key={index}
               title={title}
               selected={selectedTitle === title}
-              onClick={() => handleTitleClick(title)} isBold={false}            />
+              onClick={() => handleTitleClick(title)} isBold={false} />
           ))}
         </div>
       </div>
